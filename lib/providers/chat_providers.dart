@@ -63,7 +63,7 @@ class ChatProvider extends ChangeNotifier {
 
   GenerativeModel? get textModel => _textModel;
 
-  GenerativeModel? get visioModel => _visionModel;
+  GenerativeModel? get visionModel => _visionModel;
 
   String get modelType => _modelType;
 
@@ -141,8 +141,7 @@ class ChatProvider extends ChangeNotifier {
   }
   }
   
-
-  //set current page index
+//set current page index
   void setCurrentIndex({required int newIndex}) {
     _currentIndex = newIndex;
     notifyListeners();

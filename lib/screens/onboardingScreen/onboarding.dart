@@ -28,6 +28,8 @@ class _OnBoardingState extends State<OnBoarding> {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Column(
         children: [
@@ -42,28 +44,36 @@ class _OnBoardingState extends State<OnBoarding> {
                 },
                 itemBuilder: (_, i) {
                   return Padding(
-                    padding: const EdgeInsets.fromLTRB(30, 100, 30, 30),
+                    padding:  EdgeInsets.fromLTRB(
+                    screenWidth * 0.08, // 8% of screen width
+                    screenHeight * 0.1, // 10% of screen height
+                    screenWidth * 0.08,
+                    screenHeight * 0.05,
+                    ),
                     child: Column(
                       children: [
                         Text(
                           contents[i].title,
-                          style: const TextStyle(
-                            fontSize: 30,
+                          style: TextStyle(
+                            fontSize: screenHeight* 0.03,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        const SizedBox(
-                          height: 25,
+                         SizedBox(
+                          height: screenHeight*0.02,
                         ),
-                        Image.asset(contents[i].image),
-                        const SizedBox(
-                          height:25,
+                        Expanded(
+                        child: Image.asset(
+                          contents[i].image,
+                          fit: BoxFit.contain,)),
+                        SizedBox(
+                          height:screenHeight*0.03
                         ),
                         Text(
                           contents[i].discription,
                           textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 20,
+                          style:TextStyle(
+                            fontSize: screenHeight*0.02,
                             color: Colors.black54
                           ),
                         ),
@@ -79,25 +89,26 @@ class _OnBoardingState extends State<OnBoarding> {
                   contents.length, (index) => buildDot(index, context))),
 
           //Button Section
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.05, // 5% of screen width
+              vertical: screenHeight * 0.02, // 2% of screen height
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               // Skip Button
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Container(
-                  width: 150,
+              children: [
+                SizedBox(
+                   width: screenWidth * 0.4, // 40% of screen width
                   child: TextButton(
                     style: TextButton.styleFrom(
-                      backgroundColor: Pallete.buttonColor
-                    ),
-                    onPressed: () {
-                      // Navigate to Main Screen when "Skip" is pressed
+                      backgroundColor: Pallete.buttonColor,
+                ),
+                onPressed: () {
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
-                          builder: (context) =>
-                             const HomeScreen(), 
+                          builder: (context) => const HomeScreen(),
                         ),
                       );
                     },
@@ -110,16 +121,13 @@ class _OnBoardingState extends State<OnBoarding> {
                     ),
                   ),
                 ),
-              ),
               //Next button
-              Container(
-                height: 40,
-                margin: const EdgeInsets.all(20),
-                width: 150,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Pallete.buttonColor
-                  ),
+             SizedBox(
+                  width: screenWidth * 0.4, // 40% of screen width
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Pallete.buttonColor,
+                    ),
                   child: Text(
                     currentIndex == contents.length - 1
                         ? 'Get Started'
@@ -147,16 +155,19 @@ class _OnBoardingState extends State<OnBoarding> {
               ),
             ],
           ),
+          ),
         ],
       ),
     );
   }
 
   Container buildDot(int index, BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      height: 8,
-      width: currentIndex == index ? 25 : 10,
-      margin: const EdgeInsets.only(right: 5),
+      height: screenWidth * 0.02,
+      width: currentIndex == index ? screenWidth * 0.06 : screenWidth * 0.03,
+      margin:  EdgeInsets.only(right:screenWidth*0.01 ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Pallete.buttonColor,
